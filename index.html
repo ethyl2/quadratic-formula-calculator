@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quadratic Roots Calculator</title>
+<style>
+    body {
+        margin: 2rem;
+        background: #123456;
+        font-family: sans-serif;
+    }
+    .box {
+        background: white;
+        border-radius: 5px;
+        width: 60%;
+        margin: auto;
+        padding: 1.5rem;
+    }
+    input {
+        outline: none;
+        line-height: 1.75rem;
+        margin-left: 0.5rem;
+        border-radius: 3px;
+        border: 1px solid #123456;
+        padding-left: 0.25rem;
+    }
+    label {
+        color: #123456;
+    }
+    label:not(:first-child) {
+        margin-left: 0.5rem;
+    }
+    .red-border {
+        border: 1px solid red;
+        outline: none;
+    }
+    button {
+        margin-top: 1rem;
+        padding: 0.5rem 0.75rem;
+        font-family: sans-serif;
+        background: #123456;
+        color: white;
+        border-radius: 3px;
+        border: none;
+        font-size: 1em;
+    } 
+    button:hover {
+        opacity: 80%;
+    }
+    #answer {
+        font-weight: bold;
+    }
+    @media (min-width: 640px) {
+        .box {
+            width: 90%;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>Quadratic Equation Roots Calculator</h1>
+        <p>Let's find the roots of a polynomial equation for the following form: <i> ax<sup>2</sup>+bx+c</i>=0</p>
+        <p><i>a, b,</i> and <i>c</i> must be integers between -99 and +99 and <i>a</i> must be non-zero.</p>
+
+        <form>
+            <label>a:</label><input name="a" id="a" type="number" oninput="toggleRedBorder(event)">
+            <label>b:</label><input name="b" id="b" type="number" oninput="toggleRedBorder(event)">
+            <label>c:</label><input name="c" id="c" type="number" oninput="toggleRedBorder(event)">
+            <br>
+            <button type="button" onclick="calculate()">Calculate roots</button>
+        </form>
+        <p id="answer">Enter values for a, b, & c.</p>
+    </div>
+    <script>
+    function toggleRedBorder(event) {
+        var focusedInput = document.getElementById(event.target.id);
+        var focusedInputValue = focusedInput.value;
+        if (focusedInputValue % 1 !== 0 ||  
+            focusedInputValue < -99 || focusedInputValue > 99 || 
+            (event.target.id === 'a' && (focusedInputValue === '' || focusedInputValue === '0'))) {
+            focusedInput.classList.add('red-border');
+        } else {
+            focusedInput.classList.remove('red-border');  
+        }
+        const answerElement = document.getElementById('answer');
+        answerElement.textContent = '';
+    }
+    function calculate() {
+        let inputA = document.getElementById('a');
+        let inputB = document.getElementById('b');
+        let inputC = document.getElementById('c');
+
+        var a = inputA.value;
+        var b = inputB.value;
+        var c = inputC.value;
+
+        if (a === '') {
+            inputA.classList.add('red-border');
+        }
+
+        let alertMessage = '';
+        let alertPrefix = 'Invalid entry for';
+        let bCAlert = 'Must be an integer between -99 and +99.';
+        
+        if ( a % 1 !== 0 || a === '' || a < -99 || a > 99 || a === 0)
+            alertMessage += `${alertPrefix} a. Must be a non-zero integer between -99 and +99.\n`;
+        if ( b % 1 !== 0 || b < -99 || b > 99) {
+            alertMessage += `${alertPrefix} b. ${bCAlert}\n`;
+        }
+        if (c % 1 !== 0 || c < -99 || c > 99 ) {
+            alertMessage += `${alertPrefix} c. ${bCAlert}\n`;
+        }
+        if (alertMessage.length) {
+            alert(alertMessage);
+        }
+
+        let solution1;
+        let solution2;
+        let solutionString = '';
+        if (Math.pow(b,2) < 4*a*c) {
+            solution1 = "x\'s roots are imaginary";
+            solutionString = solution1;
+        }
+        else if (Math.pow(b,2) === 4*a*c) {
+            solution1 = ((-1*b)+(Math.sqrt((b*b)-4*a*c)))/(2*a);
+            solutionString = solution1;
+        }
+        else {
+            solution1 = ((-1*b)+(Math.sqrt((b*b)-4*a*c)))/(2*a);
+            solution2 = ((-1*b)-(Math.sqrt((b*b)-4*a*c)))/(2*a);
+            solutionString = `${solution1} , ${solution2}`;
+        }
+        let finalDisplay = '';
+        if (solutionString === "x\'s roots are imaginary") {
+            finalDisplay = solutionString;
+        } else {
+            finalDisplay = `Solution: x = ${solution1}, x = ${solution2}`;
+        }
+        document.getElementById('answer').textContent = finalDisplay;
+        }
+    </script>
+</body>
+</html>
