@@ -50,12 +50,14 @@
     </style>
 </head>
 <body>
-    <div>
+    <header>
         <h1>event.target versus this</h1>
         <p>event.target is the most deeply nested element that caused the event.</p>
-        <p>However, 'this' refers to the element that the handler runs on.</p>
-    </div>
+        <p>while 'this' refers to the element that the handler runs on.</p>
+        <p>They may or may not refer to the same element, depending on what is clicked and where the handler is located.</p>
+    </header>
 
+    <p> In this example, the handler lives in the form tag. Click on an area to see the target and 'this'.</p>
     <form id="form">form
         <div class="inner-div">div
             <p class="inner-p">p</p>
