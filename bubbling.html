@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubbling Example</title>
+    <style>
+        form {
+        background-color: #602661;
+        position: relative;
+        width: 300px;
+        height: 300px;
+        text-align: center;
+        cursor: pointer;
+        color: white;
+        border-radius: 100%;
+        margin: 1rem;
+        line-height: 50px;
+        }
+
+        .inner-div {
+        background-color: #12C5A6;
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+        line-height: 50px;
+        }
+
+        .inner-p {
+        background-color: #ED5B39;
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        margin: 0;
+        border-radius: 100%;
+        }
+
+        body {
+        line-height: 25px;
+        font-size: 16px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>event.target versus this</h1>
+        <p>event.target is the most deeply nested element that caused the event.</p>
+        <p>However, 'this' refers to the element that the handler runs on.</p>
+    </div>
+
+    <form id="form">form
+        <div class="inner-div">div
+            <p class="inner-p">p</p>
+        </div>
+    </form>
+
+    <div>
+        <p>target: <span id="target-span">_____________</span></p>
+        <p>this: <span id="this-span">____________</span></p>
+    </div>
+
+    <a href="https://javascript.info/bubbling-and-capturing" target="_blank">More about bubbling and capturing</a>
+
+    <script type="text/javascript">
+        const targetSpan = document.getElementById('target-span')
+        const thisSpan = document.getElementById('this-span')
+        form.onclick = function(event) {
+            event.target.style.backgroundColor = '#F9C754'
+            event.target.style.color = 'black'
+            targetSpan.textContent = event.target.tagName
+            thisSpan.textContent = this.tagName
+           
+            setTimeout(() => {
+                event.target.style.backgroundColor = ''
+                event.target.style.color = 'white'
+                }, 1000)
+        }
+    </script>
+    
+</body>
+</html>
