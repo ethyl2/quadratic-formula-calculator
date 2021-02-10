@@ -58,7 +58,7 @@
     </header>
 
     <p> In this example, the handler lives in the form tag. Click on an area to see the target and 'this'.</p>
-    <form id="form">form
+    <form id="first-form">form*
         <div class="inner-div">div
             <p class="inner-p">p</p>
         </div>
@@ -68,13 +68,29 @@
         <p>target: <span id="target-span">_____________</span></p>
         <p>this: <span id="this-span">_______________</span></p>
     </div>
+    <hr />
 
+    <p> In this example, a click handler lives in each element.</p>
+    <p>Click on an area to see the onclicks fired, starting with the element you clicked on, and then subsequently on each parent, as the events 'bubble' up.</p>
+    <form id="first-form" onclick="handleClick(this.tagName)">form*
+        <div class="inner-div" onclick="handleClick(this.tagName)">div*
+            <p class="inner-p" onclick="handleClick(this.tagName)">p*</p>
+        </div>
+    </form>
+    
+    <p id="onclick-message">Onclicks: </p> 
+    <button type="button" onClick="clearOnclickMessage()">Clear</button>
+
+    <br />
+    <hr />
+    <p>* = has a click handler</p>
     <a href="https://javascript.info/bubbling-and-capturing" target="_blank">More about bubbling and capturing</a>
 
     <script type="text/javascript">
         const targetSpan = document.getElementById('target-span')
         const thisSpan = document.getElementById('this-span')
-        form.onclick = function(event) {
+        const firstForm = document.getElementById('first-form')
+        firstForm.onclick = function(event) {
             event.target.style.backgroundColor = '#F9C754'
             event.target.style.color = 'black'
             targetSpan.textContent = event.target.tagName
@@ -84,6 +100,14 @@
                 event.target.style.backgroundColor = ''
                 event.target.style.color = 'white'
                 }, 1000)
+        }
+        const messageEl =  document.getElementById('onclick-message')
+        function clearOnclickMessage() {
+            messageEl.textContent = 'Onclicks: '
+        }
+        function handleClick(tagName) {
+            alert(`onclick in ${tagName}`)
+            messageEl.textContent += tagName + ' '
         }
     </script>
     
