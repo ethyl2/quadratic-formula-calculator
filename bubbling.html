@@ -5,59 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bubbling Example</title>
     <style>
+        body {
+            line-height: 25px;
+            font-size: 16px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 2rem;
+            }
+
+        h1 {
+            background-color: #12C5A6;
+            padding: 1em;
+            border-radius: 3px;
+        }
+
+        h2 {
+            color: #602661;
+        }
+
         form {
-        background-color: #602661;
-        position: relative;
-        width: 300px;
-        height: 300px;
-        text-align: center;
-        cursor: pointer;
-        color: white;
-        border-radius: 100%;
-        margin: 1rem;
-        line-height: 50px;
+            background-color: #602661;
+            position: relative;
+            width: 300px;
+            height: 300px;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            border-radius: 100%;
+            margin: 1rem;
+            line-height: 50px;
         }
 
         .inner-div {
-        background-color: #12C5A6;
-        position: absolute;
-        top: 50px;
-        left: 50px;
-        width: 200px;
-        height: 200px;
-        border-radius: 100%;
-        line-height: 50px;
+            background-color: #12C5A6;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+            line-height: 50px;
         }
 
         .inner-p {
-        background-color: #ED5B39;
-        position: absolute;
-        top: 50px;
-        left: 50px;
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        margin: 0;
-        border-radius: 100%;
+            background-color: #ED5B39;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            margin: 0;
+            border-radius: 100%;
         }
 
-        body {
-        line-height: 25px;
-        font-size: 16px;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        margin: 2rem;
+        .legend-box {
+            padding-left: 1em;
+            border-radius: 5px;
+            border: 1px solid #602661;
+            margin: 1em auto 1em 0;
+            width: 25%;
+        }
+
+        @media (max-width: 800px) {
+            .legend-box {
+                width: 90%;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>event.target versus this</h1>
-        <p><strong>event.target</strong> is the most deeply nested element that caused the event,</p>
-        <p>while <strong>'this'</strong> refers to the element that the handler runs on.</p>
-        <p>They may or may not refer to the same element, depending on what is clicked and where the handler is located.</p>
-    </header>
 
-    <p> In this example, the handler lives in the form tag. Click on an area to see the target and 'this'.</p>
+    <h1>Examples of Bubbling</h1>
+    
+    <h2>event.target versus this</h2>
+    <p>🎯 <strong><code>event.target</code></strong> is the most deeply nested element that caused the event,</p>
+    <p>while <strong>'<code>this</code>'</strong> refers to the element that the handler runs on.</p>
+    <p>They may or may not refer to the same element, depending on what is clicked and where the handler is located.</p>
+    <p> In this example, the handler lives in the form tag. 🖱️ Click on an area to see the target and 'this'.</p>
     <form id="first-form">form*
         <div class="inner-div">div
             <p class="inner-p">p</p>
@@ -65,14 +89,15 @@
     </form>
 
     <div>
-        <p>target: <span id="target-span">_____________</span></p>
-        <p>this: <span id="this-span">_______________</span></p>
+        <p><strong>target:</strong> <span id="target-span">_____________</span></p>
+        <p><strong>this:</strong> <span id="this-span">_______________</span></p>
     </div>
     <hr />
 
+    <h2>bubbling up from child to parent</h2>
     <p> In this example, a click handler lives in each element.</p>
-    <p>Click on an area to see the onclicks fired, starting with the element you clicked on, and then subsequently on each parent, as the events 'bubble' up.</p>
-    <form id="first-form" onclick="handleClick(this.tagName)">form*
+    <p>🖱️ Click on an area to see the onclicks fired, starting with the element you clicked on, and then subsequently on each parent, as the events 'bubble' up. 🥤</p>
+    <form onclick="handleClick(this.tagName)">form*
         <div class="inner-div" onclick="handleClick(this.tagName)">div*
             <p class="inner-p" onclick="handleClick(this.tagName)">p*</p>
         </div>
@@ -81,9 +106,25 @@
     <p id="onclick-message">Onclicks: </p> 
     <button type="button" onClick="clearOnclickMessage()">Clear</button>
 
+    <hr />
+    <h2>stopping the bubbling</h2>
+    <p>🛑 In this next example, a click handler lives in each element, but the div has a method to stop the bubbling: <strong><code>event.stopPropagation()</code></strong>.</p>
+    <p></p>So the click event will not reach the form when the p or div is clicked.</p>
+    <p>🖱️ Click on an area to see it in action.</p>
+    <form onclick="alert('onclick in form')">form*
+        <div class="inner-div" onclick="handleDivClick(event);">🛑 div*
+            <p class="inner-p" onclick="alert('onclick in p')">p*</p>
+        </div>
+    </form>
+
     <br />
     <hr />
-    <p>* = has a click handler</p>
+    <div class="legend-box">
+        <h3>Legend</h3>
+        <p>* = has a click handler</p>
+        <p>🛑 = has a stopPropagation method</p>
+    </div>
+    
     <a href="https://javascript.info/bubbling-and-capturing" target="_blank">More about bubbling and capturing</a>
 
     <script type="text/javascript">
@@ -108,6 +149,10 @@
         function handleClick(tagName) {
             alert(`onclick in ${tagName}`)
             messageEl.textContent += tagName + ' '
+        }
+        function handleDivClick(event) {
+            alert('onclick in div')
+            event.stopPropagation()
         }
     </script>
     
