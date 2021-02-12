@@ -76,11 +76,33 @@
 <body>
 
     <h1>Examples of Bubbling</h1>
+
+    <h2>definitions</h2>
+    <p>👇 <strong>HTML event:</strong> something that happens to an HTML element, either something a user does or something a browser does.</p>
+    <p>examples of events:</p>
+    <ul>
+        <li>🖱️ click</li>
+        <li>⌨️ keyup</li>
+        <li>🖱️ mouseover</li>
+        <li>‼️ And <a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank">tons more</a>!</li>
+    </ul>
+    <p>🏃 <strong>onevent handler:</strong> a script that is executed when an event happens. It can be specified for an event for an object in 2 ways:</p>
+    <ol>
+        <li>adding an <strong>attribute</strong> in an HTML tag.</br> Example: <code>&lt;div <strong>onclick=</strong>"handleClick()"&gt;&lt;/div&gt;</code></li>
+        <li>adding a <strong>property</strong>.<br /> Example: <code>document.querySelector("div")<strong>.onclick</strong> = function(event) { // more code here }</code></li>
+    </ol>
     
+    <p>🥤 <strong>bubbling:</strong> a way to describe the fact that when an event happens on an element, 
+        the handlers on that element are invoked, and then the handlers on its parent are invoked, 
+        and then the handlers on its grandparent are invoked, etc., until reaching the outer document object.
+        <em>Note: Not all events 'bubble', but most do.</em>
+    </p>
+    
+    <hr />
     <h2>event.target versus this</h2>
-    <p>🎯 <strong><code>event.target</code></strong> is the most deeply nested element that caused the event,</p>
+    <p>🎯 <strong><code>event.target</code></strong> is the most deeply nested element that had the event happen on it,</p>
     <p>while <strong>'<code>this</code>'</strong> refers to the element that the handler runs on.</p>
-    <p>They may or may not refer to the same element, depending on what is clicked and where the handler is located.</p>
+    <p>They may or may not refer to the same element, depending on where the event happens and where the handler is located.</p>
     <p> In this example, the handler lives in the form tag. 🖱️ Click on an area to see the target and 'this'.</p>
     <form id="first-form">form*
         <div class="inner-div">div
@@ -96,7 +118,7 @@
 
     <h2>bubbling up from child to parent</h2>
     <p> In this example, a click handler lives in each element.</p>
-    <p>🖱️ Click on an area to see the onclicks fired, starting with the element you clicked on, and then subsequently on each parent, as the events 'bubble' up. 🥤</p>
+    <p>🖱️ Click on an area to see the click handlers fired, starting with the element you clicked on, and then subsequently on each parent, as the event 'bubbles' up. 🥤</p>
     <form onclick="handleClick(this.tagName)">form*
         <div class="inner-div" onclick="handleClick(this.tagName)">div*
             <p class="inner-p" onclick="handleClick(this.tagName)">p*</p>
