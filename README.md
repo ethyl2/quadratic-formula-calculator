@@ -1,10 +1,14 @@
-# Quadratic Equation Roots Calculator
+# Quadratic Equation Roots Calculator, with Bonus
 
 ## The challenge was to build a quadratic equation root calculator with custom validation handling.
 
+This also contains a page that explains event phases with examples. I plan to move it into its own repo soon.
+
 ### Deployed site:
 
-https://ethyl2.github.io/quadratic-formula-calculator/index.html
+Quadratic Formula Calculator: https://ethyl2.github.io/quadratic-formula-calculator/index.html
+
+Event Processing Explanation & Examples: https://ethyl2.github.io/quadratic-formula-calculator/bubbling.html
 
 ### Spec:
 
