@@ -232,11 +232,11 @@
     <hr />
     <div>
         <h2>invoking the handlers during the <strong>all</strong> phases</h2>
-        <p>This example has 2 event listeners on each element.</p>
-        <p>One with <code>{ capture: true }</code> and one without.</p>
-        <p>So a click handler will be invoked during both the capture and the bubbling phases.</p>
+        <p>This example has 2 event listeners with click handlers on each element,</p>
+        <p>one with <code>{ capture: true }</code> and one without.</p>
+        <p>So a click handler will be invoked for each element during both the capture and the bubbling phases.</p>
         <p>Note: the target phase can't be handled separately; the handlers on both the capture and bubble phases are invoked during that phase.</p>
-        <p>So 2 click handlers on <code>event.target</code> will be invoked twice in this example.</p>
+        <p>So 2 click handlers on <code>event.target</code> will be invoked in this example.</p>
         <p>Click to see the handlers being invoked during all of the phases.</p>
         <form id="both-form">🕸️ form*
             <div id="both-inner-div" class="inner-div">🕸️ div*
