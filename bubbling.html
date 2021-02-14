@@ -35,6 +35,27 @@
             line-height: 50px;
         }
 
+        .definitions-box {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: stretch;
+           
+            background: lightgrey;
+            border-radius: 5px;
+            padding: 1rem;
+        }
+
+        .definition {
+            width: 45%;
+            padding: 1rem;
+            margin: 1rem;
+            border: 1px solid black;
+            border-radius: 5px;
+            background: white;
+            overflow-x: auto;
+        }
+
         .inner-div {
             background-color: #12C5A6;
             position: absolute;
@@ -70,33 +91,47 @@
             .legend-box {
                 width: 90%;
             }
+            .definition {
+                width: 90%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>Examples of Bubbling</h1>
+    <h1>Event Processing</h1>
 
     <h2>definitions</h2>
-    <p>👇 <strong>HTML event:</strong> something that happens to an HTML element, either something a user does or something a browser does.</p>
-    <p>examples of events:</p>
-    <ul>
-        <li>🖱️ click</li>
-        <li>⌨️ keyup</li>
-        <li>🖱️ mouseover</li>
-        <li>‼️ And <a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank">tons more</a>!</li>
-    </ul>
-    <p>🏃 <strong>onevent handler:</strong> a script that is executed when an event happens. It can be specified for an event for an object in 2 ways:</p>
-    <ol>
-        <li>adding an <strong>attribute</strong> in an HTML tag.</br> Example: <code>&lt;div <strong>onclick=</strong>"handleClick()"&gt;&lt;/div&gt;</code></li>
-        <li>adding a <strong>property</strong>.<br /> Example: <code>document.querySelector("div")<strong>.onclick</strong> = function(event) { // more code here }</code></li>
-    </ol>
-    
-    <p>🥤 <strong>bubbling:</strong> a way to describe the fact that when an event happens on an element, 
-        the handlers on that element are invoked, and then the handlers on its parent are invoked, 
-        and then the handlers on its grandparent are invoked, etc., until reaching the outer document object.
-        <em>Note: Not all events 'bubble', but most do.</em>
-    </p>
+    <div class="definitions-box">
+        <div class="definition">
+            <p>👇 <strong>HTML event:</strong> something that happens to an HTML element, either something a user does or something a browser does.</p>
+            <p>examples of events:</p>
+            <ul>
+                <li>🖱️ click</li>
+                <li>⌨️ keyup</li>
+                <li>🖱️ mouseover</li>
+                <li>‼️ And <a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank">tons more</a>!</li>
+            </ul>
+        </div>
+
+        <div class="definition">
+            <p>🏃 <strong>onevent handler:</strong> a script that is executed when an event happens. It can be specified for an event for an object in 2 ways:</p>
+            <ol>
+                <li>adding an <strong>attribute</strong> in an HTML tag.</br> Example: <code>&lt;div <strong>onclick=</strong>"handleClick()"&gt;&lt;/div&gt;</code></li>
+                <li>adding a <strong>property</strong>.<br /> Example: <code>document.querySelector("div")<strong>.onclick</strong> = function(event) { // more code here }</code></li>
+            </ol>
+        </div>
+        
+        <div class="definition">
+            <p>🥤 <strong>bubbling:</strong> One of the phases of event processing; a way to describe the fact that when an event happens on an element, 
+                the handlers on that element are invoked, and then the handlers on its parent are invoked, 
+                and then the handlers on its grandparent are invoked, etc., until reaching the outer document object.
+            </p>
+            <p>
+                <em>Note: Not all events 'bubble', but most do.</em>
+            </p>
+        </div>
+    </div>
     
     <hr />
     <h2>event.target versus this</h2>
