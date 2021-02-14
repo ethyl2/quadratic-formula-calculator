@@ -99,7 +99,7 @@
 </head>
 <body>
 
-    <h1>Event Processing</h1>
+    <h1>Event Processing Explained -- With Examples!</h1>
 
     <h2>definitions</h2>
     <div class="definitions-box">
@@ -130,6 +130,15 @@
             <p>
                 <em>Note: Not all events 'bubble', but most do.</em>
             </p>
+        </div>
+
+        <div class="definition">
+            <h2>The 3 Event Phases</h2>
+            <ol>
+                <li>🕸️ Capture: the event object travels from the Window, down through each ancestor, to the target's parent.</li>
+                <li>🎯 Target AKA At-Target: the event object arrives at the event object's event target.</li>
+                <li>🥤 Bubble: the event object travels in the reverse order of the capture phase -- back up to the parent, the grandparent, etc.</li>
+            </ol>
         </div>
     </div>
     
@@ -174,6 +183,21 @@
         </div>
     </form>
 
+    <hr />
+    <div>
+        <h2>invoking the handlers during the capture phase</h2>
+        <p>The default behavior is for the handlers to be invoked during the bubbling phase.</p>
+        <p>However, we can use <code>element.addEventListener(event, handler, { capture: true })</code>, or even just <code>true</code> as the 3rd argument.</p>
+        <p>(<code>true</code> acts as an alias to <code>{ capture: true }</code>.)</p>
+        <p>The handlers will be invoked during the capture phase instead.</p>
+        <p>Each of these elements have <code>true</code>; click on them to see the handlers being invoked during the capture phase.</p>
+        <form id="capture-form">form*
+            <div id="capture-inner-div" class="inner-div">div*
+                <p id="capture-inner-p" class="inner-p">p*</p>
+            </div>
+        </form>
+    </div>
+
     <br />
     <hr />
     <div class="legend-box">
@@ -211,6 +235,14 @@
             alert('onclick in div')
             event.stopPropagation()
         }
+
+        // Capture phase example
+        const captureForm = document.getElementById('capture-form')
+        const captureInnerDiv = document.getElementById('capture-inner-div')
+        const captureInnerP = document.getElementById('capture-inner-p')
+        captureForm.addEventListener('click', () => alert('onclick in form during capture phase'), true)
+        captureInnerDiv.addEventListener('click', () => alert('onclick in div during capture phase'), true)
+        captureInnerP.addEventListener('click', () => alert('onclick in p during capture phase'), { capture: true })
     </script>
     
 </body>
