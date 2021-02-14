@@ -35,6 +35,10 @@
             line-height: 50px;
         }
 
+        form:hover {
+            background-color: #b535b8;
+        }
+
         .definitions-box {
             display: flex;
             flex-flow: row wrap;
@@ -67,6 +71,10 @@
             line-height: 50px;
         }
 
+        .inner-div:hover {
+            background: #49f5d8;
+        }
+
         .inner-p {
             background-color: #ED5B39;
             position: absolute;
@@ -79,16 +87,38 @@
             border-radius: 100%;
         }
 
+        .inner-p:hover {
+            background-color: #ff896e;
+        }
+
+        .lower-boxes {
+            display: flex;
+        }
+
         .legend-box {
             padding-left: 1em;
             border-radius: 5px;
             border: 1px solid #602661;
-            margin: 1em auto 1em 0;
+            margin: 1em 1em 1em 0;
             width: 25%;
         }
 
+        #log-box {
+            padding-left: 1em;
+            border-radius: 5px;
+            border: 1px solid #602661;
+            margin: 1em auto 1em 0;
+            width: 75%;
+        }
+
         @media (max-width: 800px) {
+            .lower-boxes {
+                flex-flow: column nowrap;
+            }
             .legend-box {
+                width: 90%;
+            }
+            #log-box {
                 width: 90%;
             }
             .definition {
@@ -135,9 +165,9 @@
         <div class="definition">
             <h2>The 3 Event Phases</h2>
             <ol>
-                <li>🕸️ Capture: the event object travels from the Window, down through each ancestor, to the target's parent.</li>
-                <li>🎯 Target AKA At-Target: the event object arrives at the event object's event target.</li>
-                <li>🥤 Bubble: the event object travels in the reverse order of the capture phase -- back up to the parent, the grandparent, etc.</li>
+                <li>🕸️ <strong>Capture:</strong> the event object travels from the Window, down through each ancestor, to the target's parent.</li>
+                <li>🎯 <strong>Target</strong> AKA <strong>At-Target:</strong> the event object arrives at the event object's event target.</li>
+                <li>🥤<strong>Bubble:</strong> the event object travels in the reverse order of the capture phase -- back up to the parent, the grandparent, etc.</li>
             </ol>
         </div>
     </div>
@@ -187,26 +217,67 @@
     <div>
         <h2>invoking the handlers during the capture phase</h2>
         <p>The default behavior is for the handlers to be invoked during the bubbling phase.</p>
-        <p>However, we can use <code>element.addEventListener(event, handler, { capture: true })</code>, or even just <code>true</code> as the 3rd argument.</p>
+        <p>However, we can use <strong><code>element.addEventListener(event, handler, { capture: true })</code></strong>, or even just <code>true</code> as the 3rd argument.</p>
         <p>(<code>true</code> acts as an alias to <code>{ capture: true }</code>.)</p>
-        <p>The handlers will be invoked during the capture phase instead.</p>
+        <p>The handlers will be invoked during the capture phase instead. 🕸️</p>
         <p>Each of these elements have <code>true</code>; click on them to see the handlers being invoked during the capture phase.</p>
-        <form id="capture-form">form*
-            <div id="capture-inner-div" class="inner-div">div*
-                <p id="capture-inner-p" class="inner-p">p*</p>
+        <form id="capture-form">🕸️ form*
+            <div id="capture-inner-div" class="inner-div">🕸️ div*
+                <p id="capture-inner-p" class="inner-p">🕸️ p*</p>
+            </div>
+        </form>
+    </div>
+
+    <hr />
+    <div>
+        <h2>invoking the handlers during the <strong>all</strong> phases</h2>
+        <p>This example has 2 event listeners on each element.</p>
+        <p>One with <code>{ capture: true }</code> and one without.</p>
+        <p>So a click handler will be invoked during both the capture and the bubbling phases.</p>
+        <p>Note: the target phase can't be handled separately; the handlers on both the capture and bubble phases are invoked during that phase.</p>
+        <p>So 2 click handlers on <code>event.target</code> will be invoked twice in this example.</p>
+        <p>Click to see the handlers being invoked during all of the phases.</p>
+        <form id="both-form">🕸️ form*
+            <div id="both-inner-div" class="inner-div">🕸️ div*
+                <p id="both-inner-p" class="inner-p">🕸️ p*</p>
             </div>
         </form>
     </div>
 
     <br />
     <hr />
-    <div class="legend-box">
-        <h3>Legend</h3>
-        <p>* = has a click handler</p>
-        <p>🛑 = has a stopPropagation method</p>
+
+    <div class="lower-boxes">
+        <div class="legend-box">
+            <h3>Legend</h3>
+            <p>* = has a click handler</p>
+            <p>🛑 = has a stopPropagation method</p>
+            <p>🕸️ = has <code>{ capture: true }</code></p>
+        </div>
+
+        <div id="log-box">
+            <h3>Logs</h3>
+            <p>Click anywhere on this page to see the 3 event phases trigger logs being added below.</p>
+            <p>Each element on this page has a click handler for the capture & the bubble phase.</p>
+            <div id="log-box-logs"></div> 
+            <button type="button" onclick="window.location.reload();">Clear</button>    
+        </div>
     </div>
     
-    <a href="https://javascript.info/bubbling-and-capturing" target="_blank">More about bubbling and capturing</a>
+    <div class="resources">
+        <h3>Read More</h3>
+        <ul>
+            <li>
+                <a href="https://javascript.info/bubbling-and-capturing" target="_blank">More about bubbling and capturing</a>
+            </li>
+            <li>
+                <a href="https://www.educative.io/edpresso/what-is-event-capturing-in-javascript" target="_blank">Another article about capturing</a>
+            </li>
+            <li>
+                <a href="https://www.w3.org/TR/DOM-Level-3-Events/#event-flow" target="_blank">Docs about event flow</a>
+            </li>
+        </ul>
+    </div>
 
     <script type="text/javascript">
         const targetSpan = document.getElementById('target-span')
@@ -243,6 +314,25 @@
         captureForm.addEventListener('click', () => alert('onclick in form during capture phase'), true)
         captureInnerDiv.addEventListener('click', () => alert('onclick in div during capture phase'), true)
         captureInnerP.addEventListener('click', () => alert('onclick in p during capture phase'), { capture: true })
+
+        // Both capture/bubble example
+        const bothForm = document.getElementById('both-form')
+        const bothInnerDiv = document.getElementById('both-inner-div')
+        const bothInnerP = document.getElementById('both-inner-p')
+        bothForm.addEventListener('click', () => alert('onclick in form during capture phase'), true)
+        bothInnerDiv.addEventListener('click', () => alert('onclick in div during capture phase'), true)
+        bothInnerP.addEventListener('click', () => alert('onclick in p during capture phase'), { capture: true })
+
+        bothForm.addEventListener('click', () => alert('onclick in form during bubble phase'))
+        bothInnerDiv.addEventListener('click', () => alert('onclick in div during bubble phase'))
+        bothInnerP.addEventListener('click', () => alert('onclick in p during bubble phase'))
+
+        // Add text to log during any click on page
+        const logBoxLogs = document.getElementById('log-box-logs')
+        for(let elem of document.querySelectorAll('*')) {
+            elem.addEventListener("click", e => logBoxLogs.innerHTML += `<p>Capture: ${ elem.tagName }</p>`, true)
+            elem.addEventListener("click", e => logBoxLogs.innerHTML += `<p>Bubble: ${ elem.tagName }</p>`)
+        }
     </script>
     
 </body>
