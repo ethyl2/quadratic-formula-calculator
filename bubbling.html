@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bubbling Example</title>
+    <script type="text/javascript" src="https://chir.ag/projects/ntc/ntc.js"></script>
     <style>
         body {
             line-height: 25px;
@@ -268,7 +269,7 @@
     </div>
 
     <hr />
-    <div>
+    <div style="overflow-x: auto;">
         <h2>removing a handler</h2>
         <p>Use <code>.removeEventListener()</code> to remove an event handler that has been attached with <code>.addEventHandler()</code>.</p>
         <p>Example: <code>function myFunction() { alert('onclick happened!') };</code></br>
@@ -283,6 +284,19 @@
         </form>
         <button type='button' onclick="handleRemoveExampleReset()">Reset</button>
     
+    </div>
+
+    <hr />
+    <div>
+        <h2>sick and tired of click handlers? here's a mousemove handler instead</h2>
+        <p>In this example, the form has a 🖱️ <strong>mousemove</strong> event handler that will generate a random color 🎨 during each mouse move.</p> 
+        <p>It also has a click handler which populates the span below. (I couldn't resist adding a click handler.) </p>
+        <form id="mousemove-form">form*
+            <div id="mousemove-inner-div" class="inner-div">div
+                <p id="mousemove-inner-p" class="inner-p">p</p>
+            </div>
+        </form>
+        <p><strong>Clicked color:</strong> <span id="clicked-color">_________________</span></p>
     </div>
 
     <hr />
@@ -321,6 +335,9 @@
             </li>
             <li>
                 <a href="https://medium.com/@annapeterson89/addeventlistener-vs-onclick-which-one-should-you-draft-into-your-fantasy-football-team-16ea9ae71ee0" target="_blank">addEventListener vs. onclick</a>
+            </li>
+            <li>
+                <a href="https://chir.ag/projects/ntc/" target="_blank">Name that Color</a>
             </li>
         </ul>
     </div>
@@ -418,6 +435,48 @@
             removeForm.style.cursor = 'pointer'
             hasRemovedHandler = false 
         }
+
+        // mousemove example
+        const mousemoveForm = document.getElementById('mousemove-form')
+        const mousemoveInnerDiv = document.getElementById('mousemove-inner-div')
+        mousemoveInnerDiv.style.backgroundColor = 'black'
+        const mousemoveInnerP = document.getElementById('mousemove-inner-p')
+        mousemoveInnerP.style.backgroundColor = 'white'
+        mousemoveInnerP.style.color = 'black'
+        const clickedColorSpan = document.getElementById('clicked-color')
+        let rgbColor;
+        let hexColor;
+        let nameColor;
+
+        function componentToHex(c) {
+            let hex = c.toString(16);
+            return hex.length == 1 ? "0" + hex : hex;
+        }
+
+        function rgbToHex(r, g, b) {
+            return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+        }
+       
+        mousemoveForm.addEventListener('mousemove', function() {
+            redValue =  Math.floor(Math.random() * 256)
+            greenValue =  Math.floor(Math.random() * 256)
+            blueValue =  Math.floor(Math.random() * 256)
+            rgbColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`
+            this.style.backgroundColor = rgbColor
+            hexColor = rgbToHex(redValue, greenValue, blueValue)
+            mousemoveInnerDiv.childNodes[0].textContent = hexColor
+           
+            mousemoveInnerP.textContent = `${redValue}, ${greenValue}, ${blueValue}`
+            var n_match = ntc.name(hexColor)
+            nameColor = n_match[1]
+            this.childNodes[0].textContent = nameColor
+        })
+
+        mousemoveForm.addEventListener('click', function() {
+            clickedColorSpan.textContent = `${nameColor} | ${hexColor} | ${rgbColor}`
+            clickedColorSpan.style.padding = '0.5em'
+            clickedColorSpan.style.border = `3px solid ${hexColor}`
+        })
 
     </script>
 </body>
