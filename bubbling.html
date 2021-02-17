@@ -268,6 +268,24 @@
     </div>
 
     <hr />
+    <div>
+        <h2>removing a handler</h2>
+        <p>Use <code>.removeEventListener()</code> to remove an event handler that has been attached with <code>.addEventHandler()</code>.</p>
+        <p>Example: <code>function myFunction() { alert('onclick happened!') };</code></br>
+            <code>document.querySelector('div').addEventListener('click', myFunction);</code></br>
+            <code>document.querySelector('div')<strong>.removeEventListener</strong>('click', myFunction);</code>
+        </p>
+        <p>Note: The <code>.removeEventListener()</code> must use with the same event phase, <code>{capture: false }</code> (the default) or <code>{ capture: true }</code>, used in the <code>.addEventListener()</code>.</p>
+        <p> In this example, there is a click handler on both the form and div. However, the click handler on the div will remove the click handler on the form. Try it and see!</p>
+        <form id="remove-form">form*
+            <div id="remove-inner-div" class="inner-div">div*
+            </div>
+        </form>
+        <button type='button' onclick="handleRemoveExampleReset()">Reset</button>
+    
+    </div>
+
+    <hr />
 
     <div class="lower-boxes">
         <div class="legend-box">
@@ -375,6 +393,31 @@
         versusForm.addEventListener('click', () => alert('2nd click handler in form'))
         versusInnerDiv.onclick=handler1
         versusInnerDiv.onclick=handler2
+
+        // removeEventListener example
+        const removeForm = document.getElementById('remove-form')
+        const removeInnerDiv = document.getElementById('remove-inner-div')
+        let hasRemovedHandler = false
+        function formAlert() {
+            alert('click handler in form is present!')
+        }
+        removeForm.addEventListener('click', formAlert)
+        removeInnerDiv.addEventListener('click', () => { 
+            if (!hasRemovedHandler) {
+                hasRemovedHandler = true
+                removeForm.removeEventListener('click', formAlert)
+                removeForm.style.cursor = 'not-allowed'
+                removeInnerDiv.style.cursor = 'pointer'
+                alert('removing click handler from form')
+            } else {
+                alert("You've already removed the click handler in form.")
+            }
+        })
+        function handleRemoveExampleReset() {
+            removeForm.addEventListener('click', formAlert)
+            removeForm.style.cursor = 'pointer'
+            hasRemovedHandler = false 
+        }
 
     </script>
 </body>
