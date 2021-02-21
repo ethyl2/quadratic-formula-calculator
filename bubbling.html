@@ -296,7 +296,8 @@
                 <p id="mousemove-inner-p" class="inner-p">p</p>
             </div>
         </form>
-        <p><strong>Clicked color:</strong> <span id="clicked-color">_________________</span></p>
+        <p><strong>Clicked color:</strong> </p>
+        <p><span id="clicked-color">_________________</span></p>
     </div>
 
     <hr />
@@ -456,8 +457,8 @@
         function rgbToHex(r, g, b) {
             return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
         }
-       
-        mousemoveForm.addEventListener('mousemove', function() {
+
+        function handleMove() {
             redValue =  Math.floor(Math.random() * 256)
             greenValue =  Math.floor(Math.random() * 256)
             blueValue =  Math.floor(Math.random() * 256)
@@ -470,11 +471,14 @@
             var n_match = ntc.name(hexColor)
             nameColor = n_match[1]
             this.childNodes[0].textContent = nameColor
-        })
+        }
+       
+        mousemoveForm.addEventListener('mousemove', handleMove)
+        mousemoveForm.addEventListener('touchmove', handleMove)
 
         mousemoveForm.addEventListener('click', function() {
             clickedColorSpan.textContent = `${nameColor} | ${hexColor} | ${rgbColor}`
-            clickedColorSpan.style.padding = '0.5em'
+            clickedColorSpan.style.padding = '0.25em'
             clickedColorSpan.style.border = `3px solid ${hexColor}`
         })
 
